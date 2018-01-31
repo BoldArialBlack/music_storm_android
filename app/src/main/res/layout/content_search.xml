@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.asus.music_storm_android.SearchActivity"
+    tools:showIn="@layout/activity_search">
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/layout_tab_search"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/tab_height">
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/tab_search_song"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="歌曲" />
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/tab_search_artist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="歌手" />
+
+    </android.support.design.widget.TabLayout>
+
+    <FrameLayout
+        android:id="@+id/container_frame_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/tab_height">
+
+    </FrameLayout>
+</android.support.constraint.ConstraintLayout>

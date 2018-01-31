@@ -1,11 +1,6 @@
 package com.example.asus.music_storm_android.dummy;
 
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
-
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +11,7 @@ import java.util.Map;
  * <p>
  * TODO: Replace all uses of this class before publishing your app.
  */
-public class DummyContent {
+public class DummySongContent {
 
     /**
      * An array of sample (dummy) items.
@@ -43,8 +38,7 @@ public class DummyContent {
     }
 
     private static DummyItem createDummyItem(int position) {
-        return new DummyItem(String.valueOf(position), "name " + position, makeDetails(position),
-                position, position, "Date" + position);
+        return new DummyItem(String.valueOf(position), "Song " + position, "Artist " + position);
     }
 
     private static String makeDetails(int position) {
@@ -62,23 +56,17 @@ public class DummyContent {
     public static class DummyItem {
         public final String id;
         public final String name;
-        public final String content;
-        public final String likes_num;
-        public final String comments_num;
-        public final String date;
+        public final String artist;
 
-        public DummyItem(String id, String name, String content, int likes_num, int comments_num, String date) {
+        public DummyItem(String id, String name, String artist) {
             this.id = id;
             this.name = name;
-            this.content = content;
-            this.likes_num = Integer.toString(likes_num) + "个喜欢";
-            this.comments_num = Integer.toString(comments_num) + "条评论";
-            this.date = date;
+            this.artist = artist;
         }
 
         @Override
         public String toString() {
-            return content;
+            return artist;
         }
     }
 }

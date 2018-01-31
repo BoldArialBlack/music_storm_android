@@ -1,13 +1,13 @@
 package com.example.asus.music_storm_android;
 
 import android.content.Intent;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.EventLog;
 import android.util.Log;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -18,12 +18,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.FrameLayout;
+import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.asus.music_storm_android.dummy.DummyContent;
+import com.example.asus.music_storm_android.dummy.DummySquareContent;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, HomeFragment.OnFragmentInteractionListener,
@@ -38,6 +41,8 @@ public class MainActivity extends AppCompatActivity
     private ImageView avatarView;
     private TextView nameView;
     private TextView signView;
+
+    private boolean isLogin = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +66,7 @@ public class MainActivity extends AppCompatActivity
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         initFragments();
+
     }
 
     @Override
@@ -108,7 +114,8 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
-
+                Intent intent = new Intent(MainActivity.this,PersonalCenterActivity.class);
+                startActivity(intent);
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
@@ -185,7 +192,31 @@ public class MainActivity extends AppCompatActivity
 
         avatarView.setOnClickListener(this);
         nameView.setText("点击头像以登陆");
+    }
 
+    @Override
+    protected void onStart() {
+        initEventRecievor();
+//        EventBus.getDefault().register(MainActivity.this);
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        EventBus.getDefault().unregister(MainActivity.this);
+        super.onStop();
+    }
+
+    private void initEventRecievor() {
+        if (!EventBus.getDefault().isRegistered(MainActivity.this)) {
+            EventBus.getDefault().register(MainActivity.this);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(MainActivity.this);
     }
 
 
@@ -200,17 +231,39 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onListFragmentInteraction(DummyContent.DummyItem item) {
+    public void onListFragmentInteraction(DummySquareContent.DummyItem item) {
 
     }
 
     @Override
     public void onClick(View view) {
         if(view.getId() == R.id.view_drawer_avatar) {
-            Log.e("Drawer Image", "onClick: " );
-            Intent intent = new Intent(MainActivity.this, PersonalCenterActivity.class);
-            startActivity(intent);
+            if(!isLogin) {
+                Log.e("Drawer Image", "onClick: " );
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
+            } else {
+                Intent intent = new Intent(MainActivity.this, PersonalCenterActivity.class);
+                startActivity(intent);
+            }
         }
+    }
 
+    /**
+     * 事件响应方法
+     * 接收消息
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onLoginEvent(LoginEvent event) {
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        TextView naveView = navigationView.findViewById(R.id.text_drawer_name);
+        TextView signView =  navigationView.findViewById(R.id.text_drawer_sign);
+
+        nameView.setText(event.getUserName());
+        signView.setText(event.getSign());
+        isLogin = event.isLogin();
+
+        Log.e("Login", "is recieved");
     }
 }

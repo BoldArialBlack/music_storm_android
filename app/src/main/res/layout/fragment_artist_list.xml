@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.scwang.smartrefresh.layout.SmartRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/refreshSongLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="@dimen/tab_height"
+    app:srlAccentColor="@color/colorPrimaryLight"
+    app:srlPrimaryColor="@color/colorAccent">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/list_result_artist"
+        android:name="com.example.asus.music_storm_android.ArtistFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        app:layoutManager="LinearLayoutManager"
+        tools:context="com.example.asus.music_storm_android.ArtistFragment"
+        tools:listitem="@layout/fragment_artist">
+
+    </android.support.v7.widget.RecyclerView>
+</com.scwang.smartrefresh.layout.SmartRefreshLayout>

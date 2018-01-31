@@ -32,6 +32,8 @@
                     android:text="@string/title_search"
                     android:textColor="@android:color/background_light"
                     android:textSize="30sp"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
                     android:textStyle="bold" />
 
                 <EditText
@@ -39,7 +41,7 @@
                     style="@style/Widget.AppCompat.Light.AutoCompleteTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="48dp"
+                    android:layout_marginBottom="12dp"
                     android:layout_marginEnd="48dp"
                     android:layout_marginStart="48dp"
                     android:layout_marginTop="24dp"
@@ -54,6 +56,13 @@
                     android:singleLine="true"
                     android:textColor="@android:color/background_dark"
                     android:textSize="18sp" />
+
+                <Button
+                    android:id="@+id/btn_home_search"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="24dp"
+                    android:text="Button" />
 
             </LinearLayout>
 

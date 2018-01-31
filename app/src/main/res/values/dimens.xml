@@ -10,4 +10,5 @@
     <dimen name="nav_header_height">176dp</dimen>
     <!--<dimen name="nav_header_height">176dp</dimen>-->
     <dimen name="nav_bottom_height">56dp</dimen>
+    <dimen name="tab_height">48dp</dimen>
 </resources>
