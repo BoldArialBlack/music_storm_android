@@ -38,7 +38,7 @@ public class DummySongContent {
     }
 
     private static DummyItem createDummyItem(int position) {
-        return new DummyItem(String.valueOf(position), "Song " + position, "Artist " + position);
+        return new DummyItem(String.valueOf(position), "Song " + position, "Artist " + position, "www.baidu.com");
     }
 
     private static String makeDetails(int position) {
@@ -57,16 +57,24 @@ public class DummySongContent {
         public final String id;
         public final String name;
         public final String artist;
+        public final String url;
 
-        public DummyItem(String id, String name, String artist) {
+
+        public DummyItem(String id, String name, String artist, String url) {
             this.id = id;
             this.name = name;
             this.artist = artist;
+            this.url = url;
         }
 
         @Override
         public String toString() {
-            return artist;
+            return "DummyItem{" +
+                    "id='" + id + '\'' +
+                    ", name='" + name + '\'' +
+                    ", artist='" + artist + '\'' +
+                    ", url='" + url + '\'' +
+                    '}';
         }
     }
 }

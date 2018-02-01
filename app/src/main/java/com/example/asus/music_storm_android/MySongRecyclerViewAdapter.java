@@ -1,10 +1,15 @@
 package com.example.asus.music_storm_android;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.asus.music_storm_android.SongFragment.OnListFragmentInteractionListener;
 import com.example.asus.music_storm_android.dummy.DummySongContent.DummyItem;
@@ -30,11 +35,14 @@ public class MySongRecyclerViewAdapter extends RecyclerView.Adapter<MySongRecycl
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_song, parent, false);
+
+//        view.setOnLongClickListener(this);
+
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.mItem = mValues.get(position);
 //        holder.mIdView.setText(mValues.get(position).id);
 //        holder.mContentView.setText(mValues.get(position).content);
@@ -48,7 +56,18 @@ public class MySongRecyclerViewAdapter extends RecyclerView.Adapter<MySongRecycl
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
                     mListener.onListSongFragmentInteraction(holder.mItem);
+                    Log.e("holder.mView", Integer.toString(position)+": is clicked");
+//                    Intent intent = new Intent(SearchActivity.this, ListenActivity.class);
+//                    startActivity(intent);
                 }
+            }
+        });
+
+        holder.mView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Log.e("holder.mView", Integer.toString(position)+": is clicked");
+                return false;
             }
         });
     }
@@ -58,10 +77,12 @@ public class MySongRecyclerViewAdapter extends RecyclerView.Adapter<MySongRecycl
         return mValues.size();
     }
 
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mNameView;
         public final TextView mArtistView;
+        public final ImageView mOtherView;
         public DummyItem mItem;
 
         public ViewHolder(View view) {
@@ -69,6 +90,7 @@ public class MySongRecyclerViewAdapter extends RecyclerView.Adapter<MySongRecycl
             mView = view;
             mNameView = (TextView) view.findViewById(R.id.text_result_name);
             mArtistView = (TextView) view.findViewById(R.id.text_result_artist);
+            mOtherView = (ImageView) view.findViewById(R.id.view_more);
         }
 
         @Override

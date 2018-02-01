@@ -1,5 +1,6 @@
 package com.example.asus.music_storm_android;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -58,7 +59,10 @@ public class SearchActivity extends AppCompatActivity implements SongFragment.On
 
     @Override
     public void onListSongFragmentInteraction(DummySongContent.DummyItem item) {
-
+        Log.e("Activity", item.toString());
+        Intent intent = new Intent();
+        intent.setClass(SearchActivity.this, ListenActivity.class);  //从前者跳到后者，特别注意的是，在fragment中，用getActivity()来获取当前的activity
+        startActivity(intent);
     }
 
     @Override

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/page_up"
+        android:icon="@drawable/ic_arrow_back_black_24dp"
+        android:title="page_up" />
+    <item
+        android:id="@+id/page_down"
+        android:icon="@drawable/ic_arrow_forward_black_24dp"
+        android:title="page_down" />
+    <item
+        android:id="@+id/refresh"
+        android:icon="@drawable/ic_autorenew_black_24dp"
+        android:title="refresh" />
+</menu>
