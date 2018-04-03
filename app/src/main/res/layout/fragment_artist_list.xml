@@ -17,7 +17,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         app:layoutManager="LinearLayoutManager"
-        tools:context="com.example.asus.music_storm_android.ArtistFragment"
+        tools:context="com.example.asus.music_storm_android.atys.ArtistFragment"
         tools:listitem="@layout/fragment_artist">
 
     </android.support.v7.widget.RecyclerView>

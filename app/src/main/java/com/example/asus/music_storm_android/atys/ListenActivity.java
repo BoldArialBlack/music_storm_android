@@ -1,12 +1,10 @@
-package com.example.asus.music_storm_android;
+package com.example.asus.music_storm_android.atys;
 
 import android.annotation.TargetApi;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -24,6 +22,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import com.example.asus.music_storm_android.R;
 
 public class ListenActivity extends AppCompatActivity {
 
@@ -182,14 +182,14 @@ public class ListenActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.page_up:
+           /* case R.id.page_up:
                 Toast.makeText(getApplicationContext(), "页面向上", Toast.LENGTH_SHORT).show();
                 mWebView.pageUp(true);
                 break;
             case R.id.page_down:
                 Toast.makeText(getApplicationContext(), "页面向下", Toast.LENGTH_SHORT).show();
                 mWebView.pageDown(true);
-                break;
+                break;*/
             case R.id.refresh:
                 Toast.makeText(getApplicationContext(), "刷新~", Toast.LENGTH_SHORT).show();
                 mWebView.reload();

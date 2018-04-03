@@ -1,4 +1,4 @@
-package com.example.asus.music_storm_android;
+package com.example.asus.music_storm_android.events;
 
 /**
  * Created by ASUS on 2018/1/31.

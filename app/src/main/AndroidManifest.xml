@@ -16,14 +16,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.noActionBar">
         <activity
-            android:name=".PersonalCenterActivity"
+            android:name=".atys.PersonalCenterActivity"
             android:label="@string/title_activity_personal_center"
             android:theme="@style/AppTheme.noActionBar" />
         <activity
             android:name=".MainActivity"
+            android:configChanges="orientation|keyboard|keyboardHidden|navigation"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.noActionBar"
-            android:configChanges="orientation|keyboard|keyboardHidden|navigation"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,15 +32,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SearchActivity"
+            android:name=".atys.SearchActivity"
             android:label="@string/title_activity_search"
             android:theme="@style/AppTheme.noActionBar" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".atys.LoginActivity"
             android:label="@string/title_activity_login" />
-        <activity android:name=".ShareActivity" />
         <activity
-            android:name=".ListenActivity"
+            android:name=".atys.ListenActivity"
             android:label="@string/title_activity_listen"
             android:theme="@style/AppTheme.noActionBar"></activity>
     </application>

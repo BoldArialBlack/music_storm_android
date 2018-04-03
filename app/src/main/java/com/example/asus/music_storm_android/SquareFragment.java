@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.asus.music_storm_android.adapters.MyItemRecyclerViewAdapter;
 import com.example.asus.music_storm_android.dummy.DummySquareContent;
 import com.example.asus.music_storm_android.dummy.DummySquareContent.DummyItem;
 
@@ -21,10 +22,9 @@ import com.example.asus.music_storm_android.dummy.DummySquareContent.DummyItem;
  */
 public class SquareFragment extends Fragment {
 
-    RecyclerView recyclerView;
-
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
+    RecyclerView recyclerView;
     // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;

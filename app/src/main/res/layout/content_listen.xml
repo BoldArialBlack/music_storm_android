@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.example.asus.music_storm_android.ListenActivity"
+    tools:context="com.example.asus.music_storm_android.atys.ListenActivity"
     tools:showIn="@layout/activity_listen">
 
     <WebView
@@ -15,9 +15,9 @@
 
     <ProgressBar
         android:id="@+id/progress_bar"
+        style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="?android:attr/progressBarStyleLarge"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
@@ -26,4 +26,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/web_view" />
+
 </android.support.constraint.ConstraintLayout>

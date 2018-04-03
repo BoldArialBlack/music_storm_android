@@ -5,24 +5,25 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.util.EventLog;
-import android.util.Log;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.asus.music_storm_android.atys.LoginActivity;
+import com.example.asus.music_storm_android.atys.PersonalCenterActivity;
 import com.example.asus.music_storm_android.dummy.DummySquareContent;
+import com.example.asus.music_storm_android.events.LoginEvent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -43,6 +44,34 @@ public class MainActivity extends AppCompatActivity
     private TextView signView;
 
     private boolean isLogin = false;
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_home:
+                    if (lastShowFragment != 0) {
+                        switchFragment(lastShowFragment, 0);
+                        lastShowFragment = 0;
+                    }
+                    return true;
+                case R.id.navigation_dashboard:
+                    if (lastShowFragment != 1) {
+                        switchFragment(lastShowFragment, 1);
+                        lastShowFragment = 1;
+                    }
+                    return true;
+                case R.id.navigation_notifications:
+                    if (lastShowFragment != 2) {
+                        switchFragment(lastShowFragment, 2);
+                        lastShowFragment = 2;
+                    }
+                    return true;
+            }
+            return false;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,9 +123,9 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        /*if (id == R.id.action_settings) {
             return true;
-        }
+        }*/
 
         return super.onOptionsItemSelected(item);
     }
@@ -126,35 +155,6 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    if (lastShowFragment != 0) {
-                        switchFragment(lastShowFragment, 0);
-                        lastShowFragment = 0;
-                    }
-                    return true;
-                case R.id.navigation_dashboard:
-                    if (lastShowFragment != 1) {
-                        switchFragment(lastShowFragment, 1);
-                        lastShowFragment = 1;
-                    }
-                    return true;
-                case R.id.navigation_notifications:
-                    if (lastShowFragment != 2) {
-                        switchFragment(lastShowFragment, 2);
-                        lastShowFragment = 2;
-                    }
-                    return true;
-            }
-            return false;
-        }
-    };
 
     /**
      * 切换Fragment

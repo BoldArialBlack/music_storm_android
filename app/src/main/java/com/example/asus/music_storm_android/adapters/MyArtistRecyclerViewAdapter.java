@@ -1,4 +1,4 @@
-package com.example.asus.music_storm_android;
+package com.example.asus.music_storm_android.adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,8 +7,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.asus.music_storm_android.SquareFragment.OnListFragmentInteractionListener;
-import com.example.asus.music_storm_android.dummy.DummySquareContent.DummyItem;
+import com.example.asus.music_storm_android.R;
+import com.example.asus.music_storm_android.atys.ArtistFragment.OnListFragmentInteractionListener;
+import com.example.asus.music_storm_android.dummy.DummyArtistContent.DummyItem;
 
 import java.util.List;
 
@@ -17,12 +18,12 @@ import java.util.List;
  * specified {@link OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
-public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder> {
+public class MyArtistRecyclerViewAdapter extends RecyclerView.Adapter<MyArtistRecyclerViewAdapter.ViewHolder> {
 
     private final List<DummyItem> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyItemRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
+    public MyArtistRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -30,19 +31,15 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_square, parent, false);
+                .inflate(R.layout.fragment_artist, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-
+        holder.mAvatarView.setBackgroundResource(mValues.get(position).avatar);
         holder.mNameView.setText(mValues.get(position).name);
-        holder.mContentView.setText(mValues.get(position).content);
-        holder.mLikesView.setText(mValues.get(position).likes_num);
-        holder.mCommentsView.setText(mValues.get(position).comments_num);
-        holder.mDateView.setText(mValues.get(position).date);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,7 +47,7 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
+                    mListener.onListArtistFragmentInteraction(holder.mItem);
                 }
             }
         });
@@ -65,28 +62,18 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
         public final View mView;
         public final ImageView mAvatarView;
         public final TextView mNameView;
-        public final TextView mContentView;
-        public final TextView mLikesView;
-        public final TextView mCommentsView;
-        public final TextView mDateView;
-
-
         public DummyItem mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mAvatarView = (ImageView) view.findViewById(R.id.users_avatar);
-            mNameView = (TextView) view.findViewById(R.id.text_users_name);
-            mContentView = (TextView) view.findViewById(R.id.text_users_content);
-            mLikesView = (TextView) view.findViewById(R.id.text_like_num);
-            mCommentsView = (TextView) view.findViewById(R.id.text_comment_num);
-            mDateView = (TextView) view.findViewById(R.id.text_date);
+            mAvatarView = (ImageView) view.findViewById(R.id.view_result_avatar);
+            mNameView = (TextView) view.findViewById(R.id.text_result_artist_name);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            return super.toString() + " '" + mNameView.getText() + "'";
         }
     }
 }

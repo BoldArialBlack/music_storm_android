@@ -4,10 +4,8 @@
     <color name="colorPrimaryDark">#4A7385</color>
     <color name="colorPrimaryLight">#7CC5CF</color>
     <color name="colorAccent">#c3d1d2</color>
-    <color name="colorWarning">#E51C23</color>
     <color name="colorGrey">#525252</color>
     <color name="colorGreyLight">#BBBBBB</color>
-    <color name="backgroundGrey">#F7F7F7</color>
     <color name="black_semi_transparent">#B2000000</color>
     <color name="text">#FFFFFF</color>
 </resources>

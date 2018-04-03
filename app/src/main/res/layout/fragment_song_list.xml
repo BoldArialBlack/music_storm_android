@@ -17,6 +17,6 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         app:layoutManager="LinearLayoutManager"
-        tools:context="com.example.asus.music_storm_android.SongFragment"
+        tools:context="com.example.asus.music_storm_android.atys.SongFragment"
         tools:listitem="@layout/fragment_song" />
 </com.scwang.smartrefresh.layout.SmartRefreshLayout>

@@ -1,17 +1,15 @@
-package com.example.asus.music_storm_android;
+package com.example.asus.music_storm_android.adapters;
 
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.asus.music_storm_android.SongFragment.OnListFragmentInteractionListener;
+import com.example.asus.music_storm_android.R;
+import com.example.asus.music_storm_android.atys.SongFragment.OnListFragmentInteractionListener;
 import com.example.asus.music_storm_android.dummy.DummySongContent.DummyItem;
 
 import java.util.List;

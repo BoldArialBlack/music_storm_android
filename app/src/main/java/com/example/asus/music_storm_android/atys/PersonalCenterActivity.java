@@ -1,14 +1,16 @@
-package com.example.asus.music_storm_android;
+package com.example.asus.music_storm_android.atys;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.EventLog;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+
+import com.example.asus.music_storm_android.R;
+import com.example.asus.music_storm_android.events.LoginEvent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
