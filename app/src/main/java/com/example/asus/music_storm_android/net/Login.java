@@ -1,6 +1,9 @@
 package com.example.asus.music_storm_android.net;
 
+import android.util.Log;
+
 import com.example.asus.music_storm_android.Config;
+import com.example.asus.music_storm_android.entities.User;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -11,7 +14,7 @@ import org.json.JSONObject;
 
 public class Login {
 
-    public Login(String phone_md5, String code, final SuccessCallback successCallback, final FailCallback failCallback) {
+    public Login(final String phone_md5, String code, final SuccessCallback successCallback, final FailCallback failCallback) {
         new NetConnection(Config.SERVER_URL, HttpMethod.POST, new NetConnection.SuccessCallback() {
             @Override
             public void onSuccess(String result) {
@@ -21,7 +24,10 @@ public class Login {
                     switch (object.getInt(Config.KEY_STATUS)) {
                         case Config.RESULT_STATUS_SUCCESS:
                             if (successCallback != null) {
-                                successCallback.onSuccess(object.getString(Config.KEY_TOKEN));
+                                User user = new User(object.getString(Config.KEY_USER_NAME), object.getString(Config.KEY_USER_PROFILE),
+                                        object.getString(Config.KEY_USER_AVATAR), object.getInt(Config.KEY_USER_LEVEL), phone_md5);
+                                successCallback.onSuccess(object.getString(Config.KEY_TOKEN), user);
+                                Log.e("LOGIN", "success: " + user.toString());
                             }
                             break;
                         default:
@@ -32,6 +38,7 @@ public class Login {
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    Log.e("LOGIN", "fail: " + e);
                     if (failCallback != null) {
                         failCallback.onFail();
                     }
@@ -48,7 +55,7 @@ public class Login {
     }
 
     public static interface SuccessCallback {
-        void onSuccess(String token);
+        void onSuccess(String token, User user);
     }
 
     public static interface FailCallback {

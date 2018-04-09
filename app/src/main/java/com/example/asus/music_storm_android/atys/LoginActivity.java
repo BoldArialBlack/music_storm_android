@@ -30,10 +30,7 @@ import android.widget.Toast;
 
 import com.example.asus.music_storm_android.Config;
 import com.example.asus.music_storm_android.R;
-import com.example.asus.music_storm_android.events.LoginEvent;
 import com.example.asus.music_storm_android.net.GetCode;
-
-import org.greenrobot.eventbus.EventBus;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -147,7 +144,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Config.RESULT_STATUS_SUCCESS) {
-            EventBus.getDefault().postSticky(new LoginEvent(phone, phone));
+//            EventBus.getDefault().postSticky(new LoginEvent(phone, phone));
             Log.e("Login", "onPostExecute: success");
             finish();
         }
@@ -370,7 +367,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mAuthTask = null;
             showProgress(false);
             if (success) {
-                EventBus.getDefault().postSticky(new LoginEvent());
+//                EventBus.getDefault().postSticky(new LoginEvent());
                 Log.e("Login", "onPostExecute: success");
 //                Intent intent = new Intent(LoginActivity.this,PersonalCenterActivity.class);
 //                startActivity(intent);

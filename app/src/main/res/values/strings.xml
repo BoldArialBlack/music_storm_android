@@ -109,4 +109,29 @@
     <string name="success_to_get_code">Success to get code</string>
     <string name="success_to_login">Success to login</string>
     <string name="fail_to_login">Fail to login</string>
+    <string name="log_in_log_out">Log in / Log out</string>
+    <string name="personal_center">Personal center</string>
+    <string name="default_user_name">defaultUserName</string>
+    <string name="default_user_profile">this is a default user\'s sign. It has no meaning.</string>
+    <string name="please_sign_in_first">Please sign in first</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <string-array name="list_preference_entries">
+        <item>Entry 1</item>
+        <item>Entry 2</item>
+        <item>Entry 3</item>
+    </string-array>
+
+    <string-array name="list_preference_entry_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <string-array name="multi_select_list_preference_default_value" />
+    <string name="title_activity_publish">PublishActivity</string>
+    <string name="publish">Publish</string>
+    <string name="success_to_publish">Success to publish</string>
+    <string name="fail_to_publish">Fail to publish</string>
+    <string name="success_to_log_out">Success to log out</string>
 </resources>

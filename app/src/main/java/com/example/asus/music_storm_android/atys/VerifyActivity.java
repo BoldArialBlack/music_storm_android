@@ -11,8 +11,12 @@ import android.widget.Toast;
 
 import com.example.asus.music_storm_android.Config;
 import com.example.asus.music_storm_android.R;
+import com.example.asus.music_storm_android.entities.User;
+import com.example.asus.music_storm_android.events.LoginEvent;
 import com.example.asus.music_storm_android.net.Login;
 import com.example.asus.music_storm_android.utils.MD5Tool;
+
+import org.greenrobot.eventbus.EventBus;
 
 public class VerifyActivity extends AppCompatActivity {
 
@@ -39,7 +43,13 @@ public class VerifyActivity extends AppCompatActivity {
                 if (!TextUtils.isEmpty(codeEdt.getText())) {
                     Login login = new Login(MD5Tool.md5(phone), codeBtn.getText().toString(), new Login.SuccessCallback() {
                         @Override
-                        public void onSuccess(String token) {
+                        public void onSuccess(String token, User user) {
+                            EventBus.getDefault().postSticky(new LoginEvent(user));
+
+                            Config.cachePhoneNum(VerifyActivity.this, phone);
+                            Config.cacheToken(VerifyActivity.this, token);
+                            Config.cacheUser(VerifyActivity.this, user);
+
                             Toast.makeText(VerifyActivity.this, R.string.success_to_login, Toast.LENGTH_SHORT).show();
                             setResult(Config.RESULT_STATUS_SUCCESS);
                             finish();

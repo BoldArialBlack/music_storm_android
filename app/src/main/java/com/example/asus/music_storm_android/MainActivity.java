@@ -17,13 +17,17 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.asus.music_storm_android.atys.LoginActivity;
 import com.example.asus.music_storm_android.atys.PersonalCenterActivity;
 import com.example.asus.music_storm_android.entities.Post;
+import com.example.asus.music_storm_android.entities.User;
 import com.example.asus.music_storm_android.events.LoginEvent;
+import com.example.asus.music_storm_android.utils.MD5Tool;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -42,8 +46,13 @@ public class MainActivity extends AppCompatActivity
     private ImageView avatarView;
     private TextView nameView;
     private TextView signView;
+    private Button checkInBtn;
 
     private boolean isLogin = false;
+    private User user = null;
+    private String phone_num;
+    private String token;
+
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -96,6 +105,12 @@ public class MainActivity extends AppCompatActivity
 
         initFragments();
 
+        phone_num = Config.getCachedPhoneNum(this);
+        token = Config.getCachedToken(this);
+        user = Config.getCachedUser(this);
+
+        Log.e("MAIN_ACTIVITY", "phone_num: " + phone_num + ", token: " + token + ", user: " + user.toString());
+
     }
 
     @Override
@@ -130,21 +145,34 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
+        if (id == R.id.nav_login_logout) {
+            if (user != null) {
+//                user = null;
+//                initDrawer();
+                logOut();
+            } else {
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        } else if (id == R.id.nav_center) {
+            if (user != null) {
+                Intent intent = new Intent(MainActivity.this, PersonalCenterActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(Config.KEY_USER, user);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            } else {
+                Toast.makeText(MainActivity.this, R.string.please_sign_in_first, Toast.LENGTH_SHORT).show();
+            }
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
-                Intent intent = new Intent(MainActivity.this,PersonalCenterActivity.class);
-                startActivity(intent);
+
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
@@ -188,10 +216,18 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         avatarView = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.view_drawer_avatar);
         nameView = (TextView) navigationView.getHeaderView(0).findViewById(R.id.text_drawer_name);
-        signView = (TextView) navigationView.findViewById(R.id.text_drawer_sign);
+        signView = (TextView) navigationView.getHeaderView(0).findViewById(R.id.text_drawer_sign);
+        checkInBtn = (Button) navigationView.getHeaderView(0).findViewById(R.id.btn_drawer_sign_in);
 
         avatarView.setOnClickListener(this);
-        nameView.setText("点击头像以登陆");
+
+        if (user == null) {
+            nameView.setText("点击头像以登陆");
+            signView.setText("");
+            checkInBtn.setVisibility(View.GONE);
+        } else {
+            logIn(user);
+        }
     }
 
     @Override
@@ -238,12 +274,15 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onClick(View view) {
         if(view.getId() == R.id.view_drawer_avatar) {
-            if(!isLogin) {
+            if (user == null) {
                 Log.e("Drawer Image", "onClick: " );
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
             } else {
                 Intent intent = new Intent(MainActivity.this, PersonalCenterActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(Config.KEY_USER, user);
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         }
@@ -256,14 +295,47 @@ public class MainActivity extends AppCompatActivity
      */
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onLoginEvent(LoginEvent event) {
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        TextView naveView = navigationView.findViewById(R.id.text_drawer_name);
-        TextView signView =  navigationView.findViewById(R.id.text_drawer_sign);
+/*        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        nameView = navigationView.findViewById(R.id.text_drawer_name);
+        signView =  navigationView.findViewById(R.id.text_drawer_sign);
+        checkInBtn = navigationView.findViewById(R.id.btn_drawer_sign_in);*/
 
-        nameView.setText(event.getUserName());
-        signView.setText(event.getSign());
-        isLogin = event.isLogin();
+        user = event.getUser();
+        logIn(user);
 
         Log.e("Login", "is recieved");
+    }
+
+    public void logIn(User user) {
+        nameView.setText(user.getUserName());
+        signView.setText(user.getUserProfile());
+        checkInBtn.setVisibility(View.VISIBLE);
+        checkInBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            }
+        });
+
+    }
+
+    public void logOut() {
+        user = null;
+        avatarView.setOnClickListener(this);
+        nameView.setText("点击头像以登陆");
+        signView.setText("");
+        checkInBtn.setVisibility(View.GONE);
+        Toast.makeText(MainActivity.this, R.string.success_to_log_out, Toast.LENGTH_SHORT).show();
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public String getPhone() {
+        return MD5Tool.md5(phone_num);
     }
 }

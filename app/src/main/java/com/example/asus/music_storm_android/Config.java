@@ -24,6 +24,7 @@ public class Config {
     public static final String KEY_USER_NAME = "userName";
     public static final String KEY_USER_PROFILE = "userProfile";
     public static final String KEY_USER_AVATAR = "userAvatar";
+    public static final String KEY_USER_LEVEL = "userLevel";
     public static final String KEY_PAGE = "page";
     public static final String KEY_PERPAGE = "perpage";
     public static final String KEY_MUSIC = "music";
@@ -76,7 +77,9 @@ public class Config {
         String userName = context.getSharedPreferences(APP_ID, Context.MODE_PRIVATE).getString(KEY_USER_NAME, null);
         String userProfile = context.getSharedPreferences(APP_ID, Context.MODE_PRIVATE).getString(KEY_USER_PROFILE, null);
         String userAvatar = context.getSharedPreferences(APP_ID, Context.MODE_PRIVATE).getString(KEY_USER_AVATAR, null);
-        return new User(userName, userProfile, userName);
+        int userLevel = context.getSharedPreferences(APP_ID, Context.MODE_PRIVATE).getInt(KEY_USER_LEVEL, 0);
+        String userPhone_md5 = context.getSharedPreferences(APP_ID, Context.MODE_PRIVATE).getString(KEY_PHONE_MD5, null);
+        return new User(userName, userProfile, userAvatar, userLevel, getCachedPhoneNum(context));
     }
 
     public static void cacheUser(Context context, User user) {
@@ -84,6 +87,8 @@ public class Config {
         editor.putString(KEY_USER_NAME, user.getUserName());
         editor.putString(KEY_USER_PROFILE, user.getUserProfile());
         editor.putString(KEY_USER_AVATAR, user.getUserAvatar());
+        editor.putInt(KEY_USER_LEVEL, user.getUserLevel());
+        editor.putString(KEY_PHONE_MD5, user.getPhone());
         editor.apply();
     }
 

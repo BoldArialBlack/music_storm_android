@@ -1,41 +1,29 @@
 package com.example.asus.music_storm_android.events;
 
+import com.example.asus.music_storm_android.entities.User;
+
 /**
  * Created by ASUS on 2018/1/31.
  */
 
 public class LoginEvent {
-    private String userName;
-    private String sign;
-    private String phone;
+    /*    private String userName;
+        private String sign;
+        private String phone;*/
+    private User user;
     private boolean isLogin = false;
 
-    public LoginEvent() {
-        this.userName = "defaultUserName";
-        this.sign = "this is a default user's sign. It has no meaning.";
+    public LoginEvent(User u) {
+        user = new User(u.getUserName(), u.getUserProfile(), u.getUserAvatar(), u.getUserLevel(), u.getPhone());
         this.isLogin = true;
     }
 
-    public LoginEvent(String userName, String phone) {
-        this.userName = userName;
-        this.phone = phone;
-        this.isLogin = true;
+    public User getUser() {
+        return user;
     }
 
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getSign() {
-        return sign;
-    }
-
-    public void setSign(String sign) {
-        this.sign = sign;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public boolean isLogin() {
@@ -49,8 +37,8 @@ public class LoginEvent {
     @Override
     public String toString() {
         return "LoginEvent{" +
-                "userName='" + userName + '\'' +
-                ", sign='" + sign + '\'' +
+                "user=" + user +
+                ", isLogin=" + isLogin +
                 '}';
     }
 }

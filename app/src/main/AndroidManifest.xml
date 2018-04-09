@@ -42,7 +42,11 @@
             android:name=".atys.ListenActivity"
             android:label="@string/title_activity_listen"
             android:theme="@style/AppTheme.noActionBar" />
-        <activity android:name=".atys.VerifyActivity"></activity>
+        <activity android:name=".atys.VerifyActivity" />
+        <activity
+            android:name=".atys.PublishActivity"
+            android:label="@string/title_activity_publish"
+            android:theme="@style/AppTheme.noActionBar"></activity>
     </application>
 
 </manifest>

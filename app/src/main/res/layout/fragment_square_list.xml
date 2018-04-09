@@ -23,21 +23,21 @@
         fab:fab_labelsPosition="left">
 
         <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_publish"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/fab_1"
             fab:fab_colorNormal="@color/colorAccent"
-            fab:fab_size="mini"
             fab:fab_icon="@drawable/ic_favorite_border_black_24dp"
-            fab:fab_title="第一个FAB"/>
+            fab:fab_size="mini"
+            fab:fab_title="Publish" />
         <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_refresh"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/fab_2"
             fab:fab_colorNormal="@color/colorAccent"
-            fab:fab_size="mini"
             fab:fab_icon="@drawable/ic_reply_black_24dp"
-            fab:fab_title="第二个FAB"/>
+            fab:fab_size="mini"
+            fab:fab_title="Refresh" />
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
 </FrameLayout>

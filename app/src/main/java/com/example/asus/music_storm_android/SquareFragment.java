@@ -1,6 +1,7 @@
 package com.example.asus.music_storm_android;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -12,8 +13,11 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.asus.music_storm_android.adapters.MyItemRecyclerViewAdapter;
+import com.example.asus.music_storm_android.atys.PublishActivity;
 import com.example.asus.music_storm_android.entities.Post;
 import com.example.asus.music_storm_android.net.Timeline;
+import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +28,7 @@ import java.util.List;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class SquareFragment extends Fragment {
+public class SquareFragment extends Fragment implements View.OnClickListener {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -34,6 +38,10 @@ public class SquareFragment extends Fragment {
     private OnListFragmentInteractionListener mListener;
     private MyItemRecyclerViewAdapter adapter;
     private List<Post> posts = new ArrayList<Post>();
+
+    private FloatingActionsMenu fab;
+    private FloatingActionButton publishFab;
+    private FloatingActionButton refreshFab;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -65,6 +73,13 @@ public class SquareFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_square_list, container, false);
+
+        fab = (FloatingActionsMenu) view.findViewById(R.id.fab_menu);
+        publishFab = (FloatingActionButton) view.findViewById(R.id.fab_publish);
+        refreshFab = (FloatingActionButton) view.findViewById(R.id.fab_refresh);
+        publishFab.setOnClickListener(this);
+        refreshFab.setOnClickListener(this);
+
         recyclerView = (RecyclerView) view.findViewById(R.id.list);
         // Set the adapter
 //        if (view instanceof RecyclerView) {
@@ -90,12 +105,14 @@ public class SquareFragment extends Fragment {
             public void onSuccess(int page, int perpage, List<Post> timeline) {
                 adapter.clear();
                 adapter.addAll(timeline);
+                fab.setVisibility(View.VISIBLE);
                 Toast.makeText(getActivity(), R.string.success_to_load, Toast.LENGTH_LONG).show();
             }
         }, new Timeline.FailCallback() {
             @Override
             public void onFail(int errorCode) {
                 Toast.makeText(getActivity(), R.string.fail_to_load, Toast.LENGTH_LONG).show();
+                fab.setVisibility(View.INVISIBLE);
             }
         });
     }
@@ -116,6 +133,25 @@ public class SquareFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.fab_publish:
+                Intent intent = new Intent(getActivity(), PublishActivity.class);
+                intent.putExtra(Config.KEY_PHONE_MD5, ((MainActivity) getActivity()).getPhone());
+                intent.putExtra(Config.KEY_TOKEN, ((MainActivity) getActivity()).getToken());
+               /* User user = ((MainActivity) getActivity()).getUser();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(Config.KEY_USER, user);
+                intent.putExtras(bundle);*/
+                startActivity(intent);
+                break;
+            case R.id.fab_refresh:
+
+                break;
+        }
     }
 
     /**
