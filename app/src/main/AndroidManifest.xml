@@ -32,7 +32,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".atys.SearchActivity"
+            android:name=".atys.ResultActivity"
             android:label="@string/title_activity_search"
             android:theme="@style/AppTheme.noActionBar" />
         <activity
@@ -41,7 +41,8 @@
         <activity
             android:name=".atys.ListenActivity"
             android:label="@string/title_activity_listen"
-            android:theme="@style/AppTheme.noActionBar"></activity>
+            android:theme="@style/AppTheme.noActionBar" />
+        <activity android:name=".atys.VerifyActivity"></activity>
     </application>
 
 </manifest>

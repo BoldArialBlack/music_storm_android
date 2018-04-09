@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -25,9 +26,12 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.asus.music_storm_android.Config;
 import com.example.asus.music_storm_android.R;
 import com.example.asus.music_storm_android.events.LoginEvent;
+import com.example.asus.music_storm_android.net.GetCode;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -60,6 +64,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPhoneEdit;
     private View mProgressView;
     private View mLoginFormView;
+
+    private String phone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,15 +143,25 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Config.RESULT_STATUS_SUCCESS) {
+            EventBus.getDefault().postSticky(new LoginEvent(phone, phone));
+            Log.e("Login", "onPostExecute: success");
+            finish();
+        }
+    }
+
     /**
      * Attempts to sign in or register the account specified by the login form.
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
     private void attemptLogin() {
-        if (mAuthTask != null) {
+        /*if (mAuthTask != null) {
             return;
-        }
+        }*/
 
         // Reset errors.
         mPhoneEdit.setError(null);
@@ -153,7 +169,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         // Store values at the time of the login attempt.
 //        String email = mEmailView.getText().toString();
-        String phone = mPhoneEdit.getText().toString();
+        phone = mPhoneEdit.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
@@ -184,8 +200,27 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(phone);
-            mAuthTask.execute((Void) null);
+           /* mAuthTask = new UserLoginTask(phone);
+            mAuthTask.execute((Void) null);*/
+            ///////////////////////////////////////////////////////////////////////////////////
+            new GetCode(phone, new GetCode.SuccessCallback() {
+                @Override
+                public void onSuccess() {
+                    showProgress(false);
+                    Log.e("LOGIN_ACTIVITY", "on success");
+                    Toast.makeText(LoginActivity.this, R.string.success_to_get_code, Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(LoginActivity.this, VerifyActivity.class);
+                    intent.putExtra(Config.KEY_PHONE_NUM, mPhoneEdit.getText().toString());
+                    startActivityForResult(intent, Config.RESULT_STATUS_SUCCESS);
+                }
+            }, new GetCode.FailCallback() {
+                @Override
+                public void onFail() {
+                    showProgress(false);
+                    Log.e("LOGIN_ACTIVITY", "on fail");
+                    Toast.makeText(LoginActivity.this, R.string.fail_to_get_code, Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 
@@ -194,9 +229,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         return email.contains("@");
     }*/
 
-    private boolean isPhoneValid(String password) {
+    private boolean isPhoneValid(String phone) {
         //TODO: Replace this with your own logic
-        return password.length() > 7;
+        return phone.length() > 7;
     }
 
     /**
@@ -339,6 +374,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 Log.e("Login", "onPostExecute: success");
 //                Intent intent = new Intent(LoginActivity.this,PersonalCenterActivity.class);
 //                startActivity(intent);
+                Intent intent = new Intent(LoginActivity.this, VerifyActivity.class);
+                intent.putExtra(Config.KEY_PHONE_NUM, mPhoneEdit.getText().toString());
                 finish();
             } else {
                 mPhoneEdit.setError(getString(R.string.error_incorrect_phone));

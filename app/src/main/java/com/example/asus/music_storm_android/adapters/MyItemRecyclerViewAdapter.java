@@ -1,5 +1,6 @@
 package com.example.asus.music_storm_android.adapters;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,23 +10,25 @@ import android.widget.TextView;
 
 import com.example.asus.music_storm_android.R;
 import com.example.asus.music_storm_android.SquareFragment.OnListFragmentInteractionListener;
-import com.example.asus.music_storm_android.dummy.DummySquareContent.DummyItem;
+import com.example.asus.music_storm_android.entities.Post;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
+ * {@link RecyclerView.Adapter} that can display a {@link com.example.asus.music_storm_android.entities.Post} and makes a call to the
  * specified {@link OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
 public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
     private final OnListFragmentInteractionListener mListener;
+    private Context context;
+    private List<Post> mValues = new ArrayList<Post>();
 
-    public MyItemRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
-        mValues = items;
-        mListener = listener;
+    public MyItemRecyclerViewAdapter(Context context, OnListFragmentInteractionListener listener) {
+        this.context = context;
+        this.mListener = listener;
     }
 
     @Override
@@ -39,11 +42,12 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
 
-        holder.mNameView.setText(mValues.get(position).name);
-        holder.mContentView.setText(mValues.get(position).content);
-        holder.mLikesView.setText(mValues.get(position).likes_num);
-        holder.mCommentsView.setText(mValues.get(position).comments_num);
-        holder.mDateView.setText(mValues.get(position).date);
+        holder.mNameView.setText(mValues.get(position).getUserName());
+        holder.mAvatarView.setImageResource(R.mipmap.ic_launcher_round);
+        holder.mContentView.setText(mValues.get(position).getMsg());
+        holder.mLikesView.setText(String.format("%s个喜欢", Integer.toString(mValues.get(position).getLikes())));
+        holder.mCommentsView.setText(String.format("%s条评论", Integer.toString(mValues.get(position).getCommentNum())));
+        holder.mDateView.setText(mValues.get(position).getTime());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,6 +59,16 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
                 }
             }
         });
+    }
+
+    public void addAll(List<Post> data) {
+        mValues.addAll(data);
+        notifyDataSetChanged();
+    }
+
+    public void clear() {
+        mValues.clear();
+        notifyDataSetChanged();
     }
 
     @Override
@@ -72,7 +86,7 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
         public final TextView mDateView;
 
 
-        public DummyItem mItem;
+        public Post mItem;
 
         public ViewHolder(View view) {
             super(view);

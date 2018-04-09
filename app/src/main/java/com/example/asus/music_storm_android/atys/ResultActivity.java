@@ -9,17 +9,24 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
+import com.example.asus.music_storm_android.Config;
 import com.example.asus.music_storm_android.R;
 import com.example.asus.music_storm_android.dummy.DummyArtistContent;
-import com.example.asus.music_storm_android.dummy.DummySongContent;
+import com.example.asus.music_storm_android.entities.Music;
 
-public class SearchActivity extends AppCompatActivity implements SongFragment.OnListFragmentInteractionListener,
+public class ResultActivity extends AppCompatActivity implements SongFragment.OnListFragmentInteractionListener,
         ArtistFragment.OnListFragmentInteractionListener, TabLayout.OnTabSelectedListener {
 
     private SongFragment songFrag;
     private ArtistFragment artistFrag;
     private Fragment[] fragments;
     private int lastShowFragment = 0;
+
+    private String search;
+
+    public String getSearch() {
+        return search;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +38,10 @@ public class SearchActivity extends AppCompatActivity implements SongFragment.On
         TabLayout tabLayout = (TabLayout)findViewById(R.id.layout_tab_search);
         tabLayout.addOnTabSelectedListener(this);
 
+        search = getIntent().getStringExtra(Config.KEY_MUSIC_NAME);
+
         initFragment();
+
     }
 
     private void initFragment() {
@@ -56,10 +66,10 @@ public class SearchActivity extends AppCompatActivity implements SongFragment.On
     }
 
     @Override
-    public void onListSongFragmentInteraction(DummySongContent.DummyItem item) {
+    public void onListSongFragmentInteraction(Music item) {
         Log.e("Activity", item.toString());
-        Intent intent = new Intent();
-        intent.setClass(SearchActivity.this, ListenActivity.class);  //从前者跳到后者，特别注意的是，在fragment中，用getActivity()来获取当前的activity
+        Intent intent = new Intent(ResultActivity.this, ListenActivity.class);
+        intent.putExtra(Config.KEY_URL, item.getUrl());
         startActivity(intent);
     }
 
@@ -70,8 +80,6 @@ public class SearchActivity extends AppCompatActivity implements SongFragment.On
 
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
-//        TabLayout tabLayout = (TabLayout)findViewById(R.id.layout_tab_search);
-//        if (tab == tabLayout.getTabAt(0))
         switch (tab.getPosition()) {
             case 0:
                 if (lastShowFragment != 0) {

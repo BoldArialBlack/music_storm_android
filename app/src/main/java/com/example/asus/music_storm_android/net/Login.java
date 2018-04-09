@@ -32,7 +32,6 @@ public class Login {
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
-
                     if (failCallback != null) {
                         failCallback.onFail();
                     }

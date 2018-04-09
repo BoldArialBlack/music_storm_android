@@ -50,6 +50,7 @@ public class PubComment {
         }, Config.KEY_ACTION, Config.ACTION_PUB_COMMENT,
                 Config.KEY_TOKEN, token,
                 Config.KEY_PHONE_MD5, phone_md5,
+                Config.KEY_CONTENT, content,
                 Config.KEY_MSG_ID, msgId);
     }
 

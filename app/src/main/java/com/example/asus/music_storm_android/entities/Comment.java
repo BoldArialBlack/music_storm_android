@@ -6,19 +6,26 @@ package com.example.asus.music_storm_android.entities;
 
 public class Comment {
 
-    private String content, phone_md5;
+    private String content, userName;
 
-    public Comment(String content, String phone_md5) {
+    public Comment(String content, String userName) {
         this.content = content;
-        this.phone_md5 = phone_md5;
+        this.userName = userName;
     }
 
     public String getContent() {
         return content;
     }
 
-    public String getPhone_md5() {
-        return phone_md5;
+    public void setContent(String content) {
+        this.content = content;
     }
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 }

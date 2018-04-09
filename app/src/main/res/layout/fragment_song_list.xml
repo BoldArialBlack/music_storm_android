@@ -9,6 +9,13 @@
     app:srlAccentColor="@color/colorPrimaryLight"
     app:srlPrimaryColor="@color/colorAccent">
 
+    <TextView
+        android:id="@+id/text_result_retry"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/current_network_has_failed_please_try_again_after_a_while" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/list_result_song"
         android:name="com.example.asus.music_storm_android.SongFragment"

@@ -18,7 +18,9 @@
 
     <!-- Strings related to login -->
     <string name="prompt_phone">Phone</string>
+    <string name="prompt_code">Code</string>
     <string name="action_sign_in">Sign in or register</string>
+    <string name="action_verify_code">Verify code</string>
     <string name="error_invalid_phone">This phone is too short</string>
     <string name="error_incorrect_phone">This phone is incorrect</string>
     <string name="error_field_required">This field is required</string>
@@ -29,6 +31,8 @@
     <string name="title_login">登陆或注册</string>
     <string name="login_through_phone">通过手机进行登陆或注册</string>
     <string name="login_through_third_party">通过第三方平台登录</string>
+    <string name="title_verify">验证</string>
+    <string name="please_enter_verify_code">请输入验证码</string>
 
     <string name="loading">loading...</string>
 
@@ -91,4 +95,18 @@
     <string name="pref_ringtone_silent">Silent</string>
 
     <string name="pref_title_vibrate">Vibrate</string>
+    <string name="search_can_not_be_empty">Search can not be empty</string>
+    <string name="fail_to_search">Fail to search</string>
+    <string name="success_to_search">Success to search</string>
+    <string name="connecting">Connecting</string>
+    <string name="connecting_to_server">Connecting to server...</string>
+    <string name="success_to_load">Success to load</string>
+    <string name="fail_to_load">Fail to load</string>
+    <string name="current_network_has_failed_please_try_again_after_a_while">Current network has failed. Please try again after a while.</string>
+    <string name="title_activity_verify">VerifyActivity</string>
+    <string name="code_can_not_be_empty">Code can not be empty</string>
+    <string name="fail_to_get_code">Fail to get code</string>
+    <string name="success_to_get_code">Success to get code</string>
+    <string name="success_to_login">Success to login</string>
+    <string name="fail_to_login">Fail to login</string>
 </resources>

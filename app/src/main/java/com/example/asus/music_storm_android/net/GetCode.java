@@ -1,5 +1,7 @@
 package com.example.asus.music_storm_android.net;
 
+import android.util.Log;
+
 import com.example.asus.music_storm_android.Config;
 
 import org.json.JSONException;
@@ -13,7 +15,7 @@ public class GetCode {
 
     public GetCode(String phone, final SuccessCallback successCallback, final FailCallback failCallback) {
 
-        NetConnection nc = new NetConnection(Config.SERVER_URL, HttpMethod.POST, new NetConnection.SuccessCallback() {
+        new NetConnection(Config.SERVER_URL, HttpMethod.POST, new NetConnection.SuccessCallback() {
 
             @Override
             public void onSuccess(String result) {
@@ -24,16 +26,19 @@ public class GetCode {
                         case Config.RESULT_STATUS_SUCCESS:
                             if (successCallback != null) {
                                 successCallback.onSuccess();
+                                Log.e("GET_CODE", "on success: " + result);
                             }
                             break;
                         default:
                             if (failCallback != null) {
                                 failCallback.onFail();
+                                Log.e("GET_CODE", "on fail");
                             }
                             break;
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    Log.e("JSONEXCEPTION", e.toString());
                     if (failCallback != null) {
                         failCallback.onFail();
                     }

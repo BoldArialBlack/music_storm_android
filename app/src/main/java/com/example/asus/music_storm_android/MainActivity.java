@@ -22,7 +22,7 @@ import android.widget.TextView;
 
 import com.example.asus.music_storm_android.atys.LoginActivity;
 import com.example.asus.music_storm_android.atys.PersonalCenterActivity;
-import com.example.asus.music_storm_android.dummy.DummySquareContent;
+import com.example.asus.music_storm_android.entities.Post;
 import com.example.asus.music_storm_android.events.LoginEvent;
 
 import org.greenrobot.eventbus.EventBus;
@@ -231,7 +231,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onListFragmentInteraction(DummySquareContent.DummyItem item) {
+    public void onListFragmentInteraction(Post item) {
 
     }
 

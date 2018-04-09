@@ -7,6 +7,7 @@ package com.example.asus.music_storm_android.events;
 public class LoginEvent {
     private String userName;
     private String sign;
+    private String phone;
     private boolean isLogin = false;
 
     public LoginEvent() {
@@ -15,9 +16,9 @@ public class LoginEvent {
         this.isLogin = true;
     }
 
-    public LoginEvent(String userName, String sign) {
+    public LoginEvent(String userName, String phone) {
         this.userName = userName;
-        this.sign = sign;
+        this.phone = phone;
         this.isLogin = true;
     }
 

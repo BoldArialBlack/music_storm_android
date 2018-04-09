@@ -33,7 +33,7 @@ public class GetComment {
                                 JSONObject commentObj;
                                 for (int i = 0; i < commentsJsonArray.length(); i++) {
                                     commentObj = commentsJsonArray.getJSONObject(i);
-                                    comments.add(new Comment(commentObj.getString(Config.KEY_CONTENT), commentObj.getString(Config.KEY_PHONE_MD5)));
+                                    comments.add(new Comment(commentObj.getString(Config.KEY_CONTENT), commentObj.getString(Config.KEY_USER_NAME)));
                                 }
 
                                 successCallback.onSuccess(jsonObject.getString(Config.KEY_MSG_ID), jsonObject.getInt(Config.KEY_PAGE), jsonObject.getInt(Config.KEY_PERPAGE), comments);

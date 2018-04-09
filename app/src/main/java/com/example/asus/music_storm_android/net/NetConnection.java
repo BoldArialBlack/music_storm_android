@@ -76,10 +76,12 @@ public class NetConnection {
 
                 if (result != null) {
                     if (successCallback != null) {
+                        Log.e("NET_CONNECTION", "Success： " + result);
                         successCallback.onSuccess(result);
                     }
                 } else {
                     if (failCallback != null) {
+                        Log.e("NET_CONNECTION", "Fail: " + result);
                         failCallback.onFail();
                     }
                 }

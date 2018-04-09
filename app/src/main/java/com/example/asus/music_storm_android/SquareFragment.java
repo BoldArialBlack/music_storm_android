@@ -9,10 +9,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.asus.music_storm_android.adapters.MyItemRecyclerViewAdapter;
-import com.example.asus.music_storm_android.dummy.DummySquareContent;
-import com.example.asus.music_storm_android.dummy.DummySquareContent.DummyItem;
+import com.example.asus.music_storm_android.entities.Post;
+import com.example.asus.music_storm_android.net.Timeline;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A fragment representing a list of Items.
@@ -28,6 +32,8 @@ public class SquareFragment extends Fragment {
     // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
+    private MyItemRecyclerViewAdapter adapter;
+    private List<Post> posts = new ArrayList<Post>();
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -69,9 +75,29 @@ public class SquareFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyItemRecyclerViewAdapter(DummySquareContent.ITEMS, mListener));
+        adapter = new MyItemRecyclerViewAdapter(getActivity(), mListener);
+        recyclerView.setAdapter(adapter);
 //        }
+
+        getPosts(1, 20);
+
         return view;
+    }
+
+    private void getPosts(int page, int perpage) {
+        Timeline timeline = new Timeline("", "", page, perpage, new Timeline.SuccessCallback() {
+            @Override
+            public void onSuccess(int page, int perpage, List<Post> timeline) {
+                adapter.clear();
+                adapter.addAll(timeline);
+                Toast.makeText(getActivity(), R.string.success_to_load, Toast.LENGTH_LONG).show();
+            }
+        }, new Timeline.FailCallback() {
+            @Override
+            public void onFail(int errorCode) {
+                Toast.makeText(getActivity(), R.string.fail_to_load, Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
 
@@ -104,6 +130,6 @@ public class SquareFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        public void onListFragmentInteraction(DummyItem item);
+        public void onListFragmentInteraction(Post item);
     }
 }
