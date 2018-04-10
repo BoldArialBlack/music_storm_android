@@ -134,4 +134,5 @@
     <string name="success_to_publish">Success to publish</string>
     <string name="fail_to_publish">Fail to publish</string>
     <string name="success_to_log_out">Success to log out</string>
+    <string name="title_activity_comment">CommentActivity</string>
 </resources>

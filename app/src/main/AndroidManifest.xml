@@ -46,6 +46,10 @@
         <activity
             android:name=".atys.PublishActivity"
             android:label="@string/title_activity_publish"
+            android:theme="@style/AppTheme.noActionBar" />
+        <activity
+            android:name=".atys.CommentActivity"
+            android:label="@string/title_activity_comment"
             android:theme="@style/AppTheme.noActionBar"></activity>
     </application>
 

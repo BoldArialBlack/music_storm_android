@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.asus.music_storm_android.atys.CommentActivity;
 import com.example.asus.music_storm_android.atys.LoginActivity;
 import com.example.asus.music_storm_android.atys.PersonalCenterActivity;
 import com.example.asus.music_storm_android.entities.Post;
@@ -89,6 +90,10 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        phone_num = Config.getCachedPhoneNum(this);
+        token = Config.getCachedToken(this);
+        user = Config.getCachedUser(this);
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -104,10 +109,6 @@ public class MainActivity extends AppCompatActivity
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         initFragments();
-
-        phone_num = Config.getCachedPhoneNum(this);
-        token = Config.getCachedToken(this);
-        user = Config.getCachedUser(this);
 
         Log.e("MAIN_ACTIVITY", "phone_num: " + phone_num + ", token: " + token + ", user: " + user.toString());
 
@@ -269,6 +270,18 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onListFragmentInteraction(Post item) {
 
+        if (user != null) {
+            Intent intent = new Intent(MainActivity.this, CommentActivity.class);
+            intent.putExtra(Config.KEY_PHONE_MD5, user.getPhone());
+            intent.putExtra(Config.KEY_TOKEN, token);
+            intent.putExtra(Config.KEY_MSG_ID, item.getMsgId());
+            startActivity(intent);
+            Log.e("MAIN_ACTIVITY", item + "isClicked");
+        } else {
+            Toast.makeText(MainActivity.this, R.string.please_sign_in_first, Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
+        }
     }
 
     @Override

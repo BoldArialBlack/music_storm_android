@@ -67,11 +67,19 @@ public class Post {
         this.likes = likes;
     }
 
+    public void addLikes() {
+        this.likes++;
+    }
+
     public int getCommentNum() {
         return commentNum;
     }
 
     public void setCommentNum(int commentNum) {
         this.commentNum = commentNum;
+    }
+
+    public void addCommentNum() {
+        this.commentNum++;
     }
 }

@@ -1,6 +1,5 @@
 package com.example.asus.music_storm_android.atys;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -59,7 +58,6 @@ public class SongFragment extends Fragment {
     }
 
     // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
     public static SongFragment newInstance(int columnCount) {
         SongFragment fragment = new SongFragment();
         Bundle args = new Bundle();
@@ -79,7 +77,6 @@ public class SongFragment extends Fragment {
         search = ((ResultActivity) getActivity()).getSearch();
     }
 
-    @SuppressLint({"RestrictedApi", "ResourceAsColor"})
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -99,13 +96,19 @@ public class SongFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
 
+        initRefreshLayout(view, context);
+
+        getResult(1, 20);
+        return view;
+    }
+
+    private void initRefreshLayout(View view, Context context) {
         refreshLayout = (RefreshLayout) view.findViewById(R.id.refreshSongLayout);
         refreshLayout.setRefreshHeader(new BezierCircleHeader(context));
         refreshLayout.setRefreshFooter(new BallPulseFooter(context).setSpinnerStyle(SpinnerStyle.Scale));
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-//                refreshlayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
                 getResult(1, 20);
             }
         });
@@ -114,20 +117,14 @@ public class SongFragment extends Fragment {
             public void onLoadmore(RefreshLayout refreshlayout) {
                 curPage++;
                 getResult(curPage, 20);
-//                refreshlayout.finishLoadmore(2000/*,false*/);//传入false表示加载失败
             }
         });
-
-        getResult(1, 20);
-        return view;
     }
 
     private void getResult(int page, int perpage) {
-//        final ProgressDialog pd = ProgressDialog.show(getActivity(), getString(R.string.connecting), getString(R.string.connecting_to_server));
         Search searchConnection = new Search(search, null, page, perpage, new Search.SuccessCallback() {
             @Override
             public void onSuccess(int page, int perpage, List<Music> musics) {
-//                pd.dismiss();
                 refreshLayout.finishRefresh(true);
                 if (curPage == 1)
                     adapter.clear();
@@ -137,8 +134,8 @@ public class SongFragment extends Fragment {
         }, new Search.FailCallback() {
             @Override
             public void onFail(int errorCode) {
-//                pd.dismiss();
                 refreshLayout.finishRefresh(true);
+                adapter.clear();
                 Toast.makeText(getActivity(), R.string.fail_to_search, Toast.LENGTH_SHORT).show();
                 if (errorCode == Config.RESULT_STATUS_FAIL) {
                     searchTxt.setVisibility(View.VISIBLE);

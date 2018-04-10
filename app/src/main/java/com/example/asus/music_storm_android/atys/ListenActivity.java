@@ -23,6 +23,7 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.asus.music_storm_android.Config;
 import com.example.asus.music_storm_android.R;
 
 public class ListenActivity extends AppCompatActivity {
@@ -31,10 +32,14 @@ public class ListenActivity extends AppCompatActivity {
     private ProgressBar mProgressbar;
     private Toolbar mToolbar;
 
+    private String url;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listen);
+
+        url = getIntent().getStringExtra(Config.KEY_URL);
 
         initAppBar();//初始化Toolbar
         initWebView();//初始化WebView
@@ -55,7 +60,7 @@ public class ListenActivity extends AppCompatActivity {
     private void initWebView() {
         mWebView = (WebView) findViewById(R.id.web_view);
         mProgressbar = (ProgressBar) findViewById(R.id.progress_bar);
-        String url = "https://www.baidu.com";
+//        String url = "https://www.baidu.com";
         mWebView.loadUrl(url);
     }
 

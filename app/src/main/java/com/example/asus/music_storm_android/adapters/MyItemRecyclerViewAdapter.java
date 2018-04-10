@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -39,7 +40,7 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.mItem = mValues.get(position);
 
         holder.mNameView.setText(mValues.get(position).getUserName());
@@ -49,7 +50,7 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
         holder.mCommentsView.setText(String.format("%s条评论", Integer.toString(mValues.get(position).getCommentNum())));
         holder.mDateView.setText(mValues.get(position).getTime());
 
-        holder.mView.setOnClickListener(new View.OnClickListener() {
+        /*holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (null != mListener) {
@@ -57,6 +58,21 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
                     // fragment is attached to one) that an item has been selected.
                     mListener.onListFragmentInteraction(holder.mItem);
                 }
+            }
+        });*/
+
+        holder.mLikeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mValues.get(position).addLikes();
+                notifyDataSetChanged();
+            }
+        });
+
+        holder.mCommentsView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mListener.onListFragmentInteraction(holder.mItem);
             }
         });
     }
@@ -84,7 +100,7 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
         public final TextView mLikesView;
         public final TextView mCommentsView;
         public final TextView mDateView;
-
+        public final Button mLikeBtn;
 
         public Post mItem;
 
@@ -97,6 +113,7 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
             mLikesView = (TextView) view.findViewById(R.id.text_like_num);
             mCommentsView = (TextView) view.findViewById(R.id.text_comment_num);
             mDateView = (TextView) view.findViewById(R.id.text_date);
+            mLikeBtn = (Button) view.findViewById(R.id.btn_like);
         }
 
         @Override

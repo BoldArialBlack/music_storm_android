@@ -37,6 +37,12 @@ public class PublishActivity extends AppCompatActivity {
         publishBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                if (token == null) {
+                    Toast.makeText(PublishActivity.this, R.string.please_sign_in_first, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 if (!TextUtils.isEmpty(publishEdt.getText())) {
                     new Publish(phone_md5, token, publishEdt.getText().toString(), new Publish.SuccessCallback() {
                         @Override
@@ -50,8 +56,6 @@ public class PublishActivity extends AppCompatActivity {
                             Toast.makeText(PublishActivity.this, R.string.fail_to_publish, Toast.LENGTH_SHORT).show();
                         }
                     });
-                } else if (token == null) {
-                    Toast.makeText(PublishActivity.this, R.string.please_sign_in_first, Toast.LENGTH_SHORT).show();
                 }
             }
         });

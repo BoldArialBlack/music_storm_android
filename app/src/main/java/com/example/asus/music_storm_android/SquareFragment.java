@@ -75,14 +75,15 @@ public class SquareFragment extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.fragment_square_list, container, false);
 
         fab = (FloatingActionsMenu) view.findViewById(R.id.fab_menu);
+        fab.setVisibility(View.GONE);
         publishFab = (FloatingActionButton) view.findViewById(R.id.fab_publish);
         refreshFab = (FloatingActionButton) view.findViewById(R.id.fab_refresh);
+//        publishFab.setVisibility(View.GONE);
+//        refreshFab.setVisibility(View.GONE);
         publishFab.setOnClickListener(this);
         refreshFab.setOnClickListener(this);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.list);
-        // Set the adapter
-//        if (view instanceof RecyclerView) {
             Context context = view.getContext();
 
             if (mColumnCount <= 1) {
@@ -92,7 +93,6 @@ public class SquareFragment extends Fragment implements View.OnClickListener {
             }
         adapter = new MyItemRecyclerViewAdapter(getActivity(), mListener);
         recyclerView.setAdapter(adapter);
-//        }
 
         getPosts(1, 20);
 
@@ -142,10 +142,6 @@ public class SquareFragment extends Fragment implements View.OnClickListener {
                 Intent intent = new Intent(getActivity(), PublishActivity.class);
                 intent.putExtra(Config.KEY_PHONE_MD5, ((MainActivity) getActivity()).getPhone());
                 intent.putExtra(Config.KEY_TOKEN, ((MainActivity) getActivity()).getToken());
-               /* User user = ((MainActivity) getActivity()).getUser();
-                Bundle bundle = new Bundle();
-                bundle.putSerializable(Config.KEY_USER, user);
-                intent.putExtras(bundle);*/
                 startActivity(intent);
                 break;
             case R.id.fab_refresh:
