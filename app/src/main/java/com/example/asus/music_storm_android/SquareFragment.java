@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.asus.music_storm_android.adapters.MyItemRecyclerViewAdapter;
@@ -42,6 +43,7 @@ public class SquareFragment extends Fragment implements View.OnClickListener {
     private FloatingActionsMenu fab;
     private FloatingActionButton publishFab;
     private FloatingActionButton refreshFab;
+    private TextView warnTxt;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -83,6 +85,9 @@ public class SquareFragment extends Fragment implements View.OnClickListener {
         publishFab.setOnClickListener(this);
         refreshFab.setOnClickListener(this);
 
+        warnTxt = (TextView) view.findViewById(R.id.text_fail_network);
+        warnTxt.setVisibility(View.GONE);
+
         recyclerView = (RecyclerView) view.findViewById(R.id.list);
             Context context = view.getContext();
 
@@ -100,7 +105,7 @@ public class SquareFragment extends Fragment implements View.OnClickListener {
     }
 
     private void getPosts(int page, int perpage) {
-        Timeline timeline = new Timeline("", "", page, perpage, new Timeline.SuccessCallback() {
+        Timeline timeline = new Timeline(((MainActivity) getActivity()).getPhone(), ((MainActivity) getActivity()).getToken(), page, perpage, new Timeline.SuccessCallback() {
             @Override
             public void onSuccess(int page, int perpage, List<Post> timeline) {
                 adapter.clear();
@@ -111,6 +116,7 @@ public class SquareFragment extends Fragment implements View.OnClickListener {
         }, new Timeline.FailCallback() {
             @Override
             public void onFail(int errorCode) {
+                warnTxt.setVisibility(View.VISIBLE);
                 Toast.makeText(getActivity(), R.string.fail_to_load, Toast.LENGTH_LONG).show();
                 fab.setVisibility(View.INVISIBLE);
             }
@@ -145,7 +151,7 @@ public class SquareFragment extends Fragment implements View.OnClickListener {
                 startActivity(intent);
                 break;
             case R.id.fab_refresh:
-
+                getPosts(1, 20);
                 break;
         }
     }

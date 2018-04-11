@@ -5,6 +5,14 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/nav_bottom_height" >
 
+    <TextView
+        android:id="@+id/text_fail_network"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="@dimen/text_margin"
+        android:text="@string/current_network_has_failed_please_try_again_after_a_while" />
+
     <include
         layout="@layout/layout_recycler"
         android:layout_width="wrap_content"
