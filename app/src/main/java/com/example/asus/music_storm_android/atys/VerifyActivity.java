@@ -44,7 +44,7 @@ public class VerifyActivity extends AppCompatActivity {
                     Login login = new Login(MD5Tool.md5(phone), codeBtn.getText().toString(), new Login.SuccessCallback() {
                         @Override
                         public void onSuccess(String token, User user) {
-                            EventBus.getDefault().postSticky(new LoginEvent(user));
+                            EventBus.getDefault().postSticky(new LoginEvent(token, user));
 
                             Config.cachePhoneNum(VerifyActivity.this, phone);
                             Config.cacheToken(VerifyActivity.this, token);

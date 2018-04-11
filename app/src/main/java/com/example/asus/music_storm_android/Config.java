@@ -101,4 +101,10 @@ public class Config {
         editor.putString(KEY_PHONE_NUM, phoneNum);
         editor.apply();
     }
+
+    public static void clearCachedData(Context context) {
+        SharedPreferences.Editor editor = context.getSharedPreferences(APP_ID, Context.MODE_PRIVATE).edit();
+        editor.clear();
+        editor.apply();
+    }
 }

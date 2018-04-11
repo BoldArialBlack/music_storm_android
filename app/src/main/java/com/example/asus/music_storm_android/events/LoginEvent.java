@@ -10,12 +10,22 @@ public class LoginEvent {
     /*    private String userName;
         private String sign;
         private String phone;*/
+    private String token;
     private User user;
     private boolean isLogin = false;
 
-    public LoginEvent(User u) {
+    public LoginEvent(String token, User u) {
+        this.token = token;
         user = new User(u.getUserName(), u.getUserProfile(), u.getUserAvatar(), u.getUserLevel(), u.getPhone());
         this.isLogin = true;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public User getUser() {

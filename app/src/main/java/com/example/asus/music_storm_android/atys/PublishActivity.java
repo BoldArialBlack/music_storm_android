@@ -80,6 +80,13 @@ public class PublishActivity extends AppCompatActivity {
         });
 
         titleM.setText(title);
+
+        titleR.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(PublishActivity.this, SearchActivity.class));
+            }
+        });
     }
 
 }

@@ -151,7 +151,6 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.action_search) {
             Intent intent = new Intent(MainActivity.this, SearchActivity.class);
             startActivity(intent);
-//            return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -163,14 +162,14 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_login_logout) {
-            if (user != null) {
+            if (token != null) {
                 logOut();
             } else {
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
         } else if (id == R.id.nav_center) {
-            if (user != null) {
+            if (token != null) {
                 Intent intent = new Intent(MainActivity.this, PersonalCenterActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(Config.KEY_USER, user);
@@ -179,6 +178,8 @@ public class MainActivity extends AppCompatActivity
                 startActivity(intent);
             } else {
                 Toast.makeText(MainActivity.this, R.string.please_sign_in_first, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
             }
         } else if (id == R.id.nav_slideshow) {
 
@@ -232,7 +233,7 @@ public class MainActivity extends AppCompatActivity
 
         avatarView.setOnClickListener(this);
 
-        if (user == null) {
+        if (token == null) {
             nameView.setText("点击头像以登陆");
             signView.setText("");
             checkInBtn.setVisibility(View.GONE);
@@ -279,7 +280,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onListFragmentInteraction(Post item) {
-
         if (user != null) {
             Intent intent = new Intent(MainActivity.this, CommentActivity.class);
             intent.putExtra(Config.KEY_PHONE_MD5, user.getPhone());
@@ -297,8 +297,9 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onClick(View view) {
         if(view.getId() == R.id.view_drawer_avatar) {
-            if (user == null) {
+            if (token == null) {
                 Log.e("Drawer Image", "onClick: " );
+                Toast.makeText(MainActivity.this, R.string.please_sign_in_first, Toast.LENGTH_SHORT);
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
             } else {
@@ -323,6 +324,7 @@ public class MainActivity extends AppCompatActivity
         signView =  navigationView.findViewById(R.id.text_drawer_sign);
         checkInBtn = navigationView.findViewById(R.id.btn_drawer_sign_in);*/
 
+        token = event.getToken();
         user = event.getUser();
         logIn(user);
 
@@ -343,6 +345,8 @@ public class MainActivity extends AppCompatActivity
 
     public void logOut() {
         user = null;
+        token = null;
+        Config.clearCachedData(this);
         avatarView.setOnClickListener(this);
         nameView.setText("点击头像以登陆");
         signView.setText("");

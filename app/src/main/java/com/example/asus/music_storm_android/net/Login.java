@@ -27,7 +27,7 @@ public class Login {
                                 User user = new User(object.getString(Config.KEY_USER_NAME), object.getString(Config.KEY_USER_PROFILE),
                                         object.getString(Config.KEY_USER_AVATAR), object.getInt(Config.KEY_USER_LEVEL), phone_md5);
                                 successCallback.onSuccess(object.getString(Config.KEY_TOKEN), user);
-                                Log.e("LOGIN", "success: " + user.toString());
+                                Log.e("LOGIN", "success: " + object.getString(Config.KEY_TOKEN) + " , " + user.toString());
                             }
                             break;
                         default:
