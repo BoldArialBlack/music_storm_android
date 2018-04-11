@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.asus.music_storm_android.Config;
@@ -26,7 +27,10 @@ public class PublishActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publish);
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("");
         setSupportActionBar(toolbar);
+
+        initToolbar("发布");
 
         Intent intent = getIntent();
         phone_md5 = intent.getStringExtra(Config.KEY_PHONE_MD5);
@@ -59,6 +63,23 @@ public class PublishActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void initToolbar(String title) {
+        TextView titleL, titleM, titleR;
+
+        titleL = (TextView) findViewById(R.id.txt_left_title);
+        titleM = (TextView) findViewById(R.id.txt_main_title);
+        titleR = (TextView) findViewById(R.id.txt_right_title);
+
+        titleL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+        titleM.setText(title);
     }
 
 }

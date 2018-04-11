@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.example.asus.music_storm_android.atys.CommentActivity;
 import com.example.asus.music_storm_android.atys.LoginActivity;
 import com.example.asus.music_storm_android.atys.PersonalCenterActivity;
+import com.example.asus.music_storm_android.atys.SearchActivity;
 import com.example.asus.music_storm_android.entities.Post;
 import com.example.asus.music_storm_android.entities.User;
 import com.example.asus.music_storm_android.events.LoginEvent;
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity
 
     private HomeFragment homefrag;
     private NavigationFragment navfrag;
+
     private SquareFragment squarefrag;
     private Fragment[] fragments;
     private int lastShowFragment = 0;
@@ -48,6 +50,7 @@ public class MainActivity extends AppCompatActivity
     private TextView nameView;
     private TextView signView;
     private Button checkInBtn;
+    private TextView title;
 
     private boolean isLogin = false;
     private User user = null;
@@ -64,18 +67,21 @@ public class MainActivity extends AppCompatActivity
                     if (lastShowFragment != 0) {
                         switchFragment(lastShowFragment, 0);
                         lastShowFragment = 0;
+                        title.setText("搜索");
                     }
                     return true;
                 case R.id.navigation_dashboard:
                     if (lastShowFragment != 1) {
                         switchFragment(lastShowFragment, 1);
                         lastShowFragment = 1;
+                        title.setText("导航");
                     }
                     return true;
                 case R.id.navigation_notifications:
                     if (lastShowFragment != 2) {
                         switchFragment(lastShowFragment, 2);
                         lastShowFragment = 2;
+                        title.setText("广场");
                     }
                     return true;
             }
@@ -88,7 +94,10 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("");
         setSupportActionBar(toolbar);
+        title = toolbar.findViewById(R.id.toolbar_title);
+        title.setText("搜索");
 
         phone_num = Config.getCachedPhoneNum(this);
         token = Config.getCachedToken(this);
@@ -139,9 +148,11 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        /*if (id == R.id.action_settings) {
-            return true;
-        }*/
+        if (id == R.id.action_search) {
+            Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+            startActivity(intent);
+//            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -153,8 +164,6 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_login_logout) {
             if (user != null) {
-//                user = null;
-//                initDrawer();
                 logOut();
             } else {
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
@@ -166,6 +175,7 @@ public class MainActivity extends AppCompatActivity
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(Config.KEY_USER, user);
                 intent.putExtras(bundle);
+                intent.putExtra(Config.KEY_TOKEN, token);
                 startActivity(intent);
             } else {
                 Toast.makeText(MainActivity.this, R.string.please_sign_in_first, Toast.LENGTH_SHORT).show();

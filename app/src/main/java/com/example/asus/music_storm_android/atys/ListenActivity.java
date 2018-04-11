@@ -52,7 +52,7 @@ public class ListenActivity extends AppCompatActivity {
     private void initAppBar() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle("载入中..");
-        mToolbar.setTitleTextColor(getResources().getColor(R.color.colorPrimary));
+        mToolbar.setTitleTextColor(getResources().getColor(R.color.text));
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
     }
@@ -60,7 +60,7 @@ public class ListenActivity extends AppCompatActivity {
     private void initWebView() {
         mWebView = (WebView) findViewById(R.id.web_view);
         mProgressbar = (ProgressBar) findViewById(R.id.progress_bar);
-//        String url = "https://www.baidu.com";
+        String url = "https://www.baidu.com";
         mWebView.loadUrl(url);
     }
 

@@ -114,7 +114,8 @@
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/text_like_num"
                     android:clickable="true"
-                    android:text="几个评论" />
+                    android:text="几个评论"
+                    android:textColor="@color/colorPrimaryDark" />
 
                 <TextView
                     android:id="@+id/text_date"

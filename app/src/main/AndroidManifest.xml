@@ -50,6 +50,10 @@
         <activity
             android:name=".atys.CommentActivity"
             android:label="@string/title_activity_comment"
+            android:theme="@style/AppTheme.noActionBar" />
+        <activity
+            android:name=".atys.SearchActivity"
+            android:label="@string/title_activity_search"
             android:theme="@style/AppTheme.noActionBar"></activity>
     </application>
 

@@ -9,7 +9,9 @@
     tools:showIn="@layout/activity_personal_center">
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/list_pc_post"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="5dp"
         tools:listitem="@layout/fragment_square" />
 </android.support.v4.widget.NestedScrollView>

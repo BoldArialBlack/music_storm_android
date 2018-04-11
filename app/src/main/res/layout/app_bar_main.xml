@@ -31,18 +31,13 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:singleLine="true"
-                    android:text="标题"
+                    android:text=""
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large.Inverse"
                     android:textColor="@android:color/white"
-                    android:textSize="20sp"
-                    android:visibility="visible" />
+                    android:textSize="21sp"
+                    android:visibility="visible"
+                    tools:text="@string/app_name" />
             </android.support.v7.widget.Toolbar>
-
-            <com.miguelcatalan.materialsearchview.MaterialSearchView
-                android:id="@+id/search_view"
-                style="@style/MaterialSearchViewStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
         </FrameLayout>
     </android.support.design.widget.AppBarLayout>
 

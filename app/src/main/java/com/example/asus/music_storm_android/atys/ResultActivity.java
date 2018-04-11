@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.example.asus.music_storm_android.Config;
 import com.example.asus.music_storm_android.R;
@@ -24,16 +25,15 @@ public class ResultActivity extends AppCompatActivity implements SongFragment.On
 
     private String search;
 
-    public String getSearch() {
-        return search;
-    }
+    private TextView title_l, title_m, title_r;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
+        setContentView(R.layout.activity_result);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
 
         TabLayout tabLayout = (TabLayout)findViewById(R.id.layout_tab_search);
         tabLayout.addOnTabSelectedListener(this);
@@ -107,5 +107,9 @@ public class ResultActivity extends AppCompatActivity implements SongFragment.On
     @Override
     public void onTabReselected(TabLayout.Tab tab) {
 
+    }
+
+    public String getSearch() {
+        return search;
     }
 }
