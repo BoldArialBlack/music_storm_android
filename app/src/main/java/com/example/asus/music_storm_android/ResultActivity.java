@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.asus.music_storm_android.atys.ArtistFragment;
+import com.example.asus.music_storm_android.atys.SongFragment;
 import com.example.asus.music_storm_android.dummy.DummyArtistContent;
 import com.example.asus.music_storm_android.dummy.DummySongContent;
 
