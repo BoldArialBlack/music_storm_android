@@ -31,7 +31,7 @@
             android:id="@+id/text_comment_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/current_network_has_failed_please_try_again_after_a_while"
+            android:text="@string/default_user_profile"
             android:textColor="@color/cardview_dark_background" />
     </LinearLayout>
 </LinearLayout>

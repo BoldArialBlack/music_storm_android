@@ -1,29 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.scwang.smartrefresh.layout.SmartRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/refreshSongLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="@dimen/tab_height"
-    app:srlAccentColor="@color/colorPrimaryLight"
-    app:srlPrimaryColor="@color/colorAccent">
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/text_result_retry"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:gravity="center"
         android:text="@string/current_network_has_failed_please_try_again_after_a_while" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/list_result_song"
-        android:name="com.example.asus.music_storm_android.SongFragment"
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshSongLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        app:layoutManager="LinearLayoutManager"
-        tools:context="com.example.asus.music_storm_android.atys.SongFragment"
-        tools:listitem="@layout/fragment_song" />
-</com.scwang.smartrefresh.layout.SmartRefreshLayout>
+        app:srlAccentColor="@color/colorPrimaryLight"
+        app:srlPrimaryColor="@color/colorAccent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/list_result_song"
+            android:name="com.example.asus.music_storm_android.SongFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            app:layoutManager="LinearLayoutManager"
+            tools:context="com.example.asus.music_storm_android.atys.SongFragment"
+            tools:listitem="@layout/fragment_song" />
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+</LinearLayout>

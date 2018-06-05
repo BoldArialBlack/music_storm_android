@@ -81,11 +81,13 @@ public class SongFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_song_list, container, false);
+        Context context = view.getContext();
 
         searchTxt = (TextView) view.findViewById(R.id.text_result_retry);
         searchTxt.setVisibility(View.GONE);
 
-        Context context = view.getContext();
+        initRefreshLayout(view, context);
+
         recyclerView = (RecyclerView) view.findViewById(R.id.list_result_song);
         if (mColumnCount <= 1) {
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
@@ -95,8 +97,6 @@ public class SongFragment extends Fragment {
         adapter = new MySongRecyclerViewAdapter(context, mListener);
         recyclerView.setAdapter(adapter);
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
-
-        initRefreshLayout(view, context);
 
         getResult(1, 20);
         return view;
@@ -138,8 +138,7 @@ public class SongFragment extends Fragment {
                 adapter.clear();
                 Toast.makeText(getActivity(), R.string.fail_to_search, Toast.LENGTH_SHORT).show();
                 if (errorCode == Config.RESULT_STATUS_FAIL) {
-                    searchTxt.setVisibility(View.VISIBLE);
-                    Log.e("SONG_FRAGMENT", "setVisibility");
+                    recyclerView.setVisibility(View.GONE);
                 }
                 Log.e("SONG_FRAGMENT", "onFail");
             }

@@ -105,7 +105,7 @@ public class SquareFragment extends Fragment implements View.OnClickListener {
     }
 
     private void getPosts(int page, int perpage) {
-        Timeline timeline = new Timeline(((MainActivity) getActivity()).getPhone(), ((MainActivity) getActivity()).getToken(), page, perpage, new Timeline.SuccessCallback() {
+        Timeline timeline = new Timeline(null, ((MainActivity) getActivity()).getToken(), page, perpage, new Timeline.SuccessCallback() {
             @Override
             public void onSuccess(int page, int perpage, List<Post> timeline) {
                 adapter.clear();
@@ -145,10 +145,15 @@ public class SquareFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.fab_publish:
-                Intent intent = new Intent(getActivity(), PublishActivity.class);
-                intent.putExtra(Config.KEY_PHONE_MD5, ((MainActivity) getActivity()).getPhone());
-                intent.putExtra(Config.KEY_TOKEN, ((MainActivity) getActivity()).getToken());
-                startActivity(intent);
+                String phone_md5, token;
+                phone_md5 = ((MainActivity) getActivity()).getPhone();
+                token = ((MainActivity) getActivity()).getToken();
+                if (phone_md5 != null && token != null) {
+                    Intent intent = new Intent(getActivity(), PublishActivity.class);
+                    intent.putExtra(Config.KEY_PHONE_MD5, phone_md5);
+                    intent.putExtra(Config.KEY_TOKEN, token);
+                    startActivity(intent);
+                }
                 break;
             case R.id.fab_refresh:
                 getPosts(1, 20);

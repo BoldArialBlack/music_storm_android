@@ -56,7 +56,7 @@ public class HistoryDao {
 
     public List<String> query(String str) {
         String querySql = "SELECT * FROM " + helper.DB_TABLE + " WHERE " + helper.DB_KEY_NAME
-                + "LIKE '%" + str + "%' ORDER BY " + helper.DB_KEY_NAME;
+                + " LIKE '%" + str + "%' ORDER BY " + helper.DB_KEY_NAME;
         List<String> list = new ArrayList<>();
         Cursor cursor = helper.getReadableDatabase().rawQuery(querySql, null);
         while (cursor.moveToNext()) {
@@ -67,9 +67,25 @@ public class HistoryDao {
         return list;
     }
 
+    public Cursor queryCursor(String str) {
+        String querySql = "SELECT * FROM " + helper.DB_TABLE + " WHERE " + helper.DB_KEY_NAME
+                + " LIKE '%" + str + "%' ORDER BY " + helper.DB_KEY_NAME;
+
+        Cursor cursor = helper.getReadableDatabase().rawQuery(querySql, null);
+        db.close();
+        return cursor;
+    }
+
     public void deleteAll() {
         db = helper.getWritableDatabase();
         db.execSQL("DELETE FROM " + helper.DB_TABLE);
         db.close();
+    }
+
+    public Cursor select() {
+        db = helper.getReadableDatabase();
+        Cursor cursor = db.query(helper.DB_TABLE, null, null, null, null, null, null);
+        db.close();
+        return cursor;
     }
 }

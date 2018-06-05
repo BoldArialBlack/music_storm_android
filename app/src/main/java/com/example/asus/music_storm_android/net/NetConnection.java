@@ -34,6 +34,7 @@ public class NetConnection {
 
                 try {
                     URLConnection uc = new URL(url).openConnection();
+                    uc.setConnectTimeout(5 * 1000);                      /////////////
 
                     switch (method) {
                         case POST:
@@ -66,6 +67,8 @@ public class NetConnection {
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (RuntimeException e) {
                     e.printStackTrace();
                 }
                 return null;

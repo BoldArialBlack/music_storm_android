@@ -1,11 +1,13 @@
 package com.example.asus.music_storm_android.atys;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
@@ -19,6 +21,8 @@ import com.example.asus.music_storm_android.Config;
 import com.example.asus.music_storm_android.R;
 import com.example.asus.music_storm_android.dummy.DummyArtistContent;
 import com.example.asus.music_storm_android.entities.Music;
+import com.example.asus.music_storm_android.utils.HistoryDao;
+import com.example.asus.music_storm_android.utils.HistorySQLiteOpenHelper;
 
 public class ResultActivity extends AppCompatActivity implements SongFragment.OnListFragmentInteractionListener,
         ArtistFragment.OnListFragmentInteractionListener, TabLayout.OnTabSelectedListener {
@@ -29,9 +33,11 @@ public class ResultActivity extends AppCompatActivity implements SongFragment.On
     private int lastShowFragment = 0;
 
     private String search;
+    private HistoryDao dao;
 
     private TextView title_l, title_m;
     private SearchView searchView;
+    private SimpleCursorAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,34 +126,56 @@ public class ResultActivity extends AppCompatActivity implements SongFragment.On
         getMenuInflater().inflate(R.menu.menu_search, menu);
 
         MenuItem searchItem = menu.findItem(R.id.action_search);
+
+        dao = new HistoryDao(this);
         searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        adapter = new SimpleCursorAdapter(this, R.layout.layout_list_suggestion,
+                dao.select(), new String[]{HistorySQLiteOpenHelper.DB_KEY_NAME}, new int[]{R.id.text_history});
+
+        initSearchView();
+
+        return super.onCreateOptionsMenu(menu);
+
+    }
+
+    private void initSearchView() {
         searchView.setSubmitButtonEnabled(true);
+        searchView.setSuggestionsAdapter(adapter);
         searchView.setOnSuggestionListener(new SearchView.OnSuggestionListener() {
             @Override
             public boolean onSuggestionSelect(int position) {
-                return false;
+                String str = ((Cursor) adapter.getItem(position)).getString(1);
+                Log.e("QUERY", str);
+                searchView.setQuery(str, true);
+                return true;
             }
 
             @Override
             public boolean onSuggestionClick(int position) {
-                return false;
+                String str = ((Cursor) adapter.getItem(position)).getString(1);
+                Log.e("QUERY", str);
+                searchView.setQuery(str, true);
+                return true;
             }
         });
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                return false;
+                dao.add(query);
+                return true;
             }
 
             @Override
-            public boolean onQueryTextChange(String newText) {
+            public boolean onQueryTextChange(String query) {
+                Cursor cursor = dao.queryCursor(query);
+/*                Log.e("SUGGESTION", query);
+//                Log.e("CURSOR", cursor.getString(0));
+                Log.e("STRING", String.valueOf(dao.query(query)));*/
+                adapter.swapCursor(cursor);
                 return false;
             }
         });
-
-        return super.onCreateOptionsMenu(menu);
-
     }
 
     @Override

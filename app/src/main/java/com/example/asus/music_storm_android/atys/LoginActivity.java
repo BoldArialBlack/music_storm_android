@@ -196,6 +196,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
+            mPhoneEdit.clearFocus();
             showProgress(true);
            /* mAuthTask = new UserLoginTask(phone);
             mAuthTask.execute((Void) null);*/

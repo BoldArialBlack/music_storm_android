@@ -102,7 +102,7 @@
     <string name="connecting_to_server">Connecting to server...</string>
     <string name="success_to_load">Success to load</string>
     <string name="fail_to_load">Fail to load</string>
-    <string name="current_network_has_failed_please_try_again_after_a_while">Current network has failed. Please try again after a while.</string>
+    <string name="current_network_has_failed_please_try_again_after_a_while">Current network has failed.\nPlease try again after a while.</string>
     <string name="title_activity_verify">VerifyActivity</string>
     <string name="code_can_not_be_empty">Code can not be empty</string>
     <string name="fail_to_get_code">Fail to get code</string>
